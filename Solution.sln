@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockWatch", "StockWatch\StockWatch.csproj", "{D847FC0D-2DEC-4245-A98C-7AF8B7285FA0}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "PersonalSite", "PersonalSite\PersonalSite.njsproj", "{8323BF9D-AD91-4DDC-B061-8481C63432E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,14 @@ Global
 		{8B545D8D-F002-48B2-885A-48DF6272D925}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B545D8D-F002-48B2-885A-48DF6272D925}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B545D8D-F002-48B2-885A-48DF6272D925}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D847FC0D-2DEC-4245-A98C-7AF8B7285FA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D847FC0D-2DEC-4245-A98C-7AF8B7285FA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D847FC0D-2DEC-4245-A98C-7AF8B7285FA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D847FC0D-2DEC-4245-A98C-7AF8B7285FA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8323BF9D-AD91-4DDC-B061-8481C63432E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8323BF9D-AD91-4DDC-B061-8481C63432E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8323BF9D-AD91-4DDC-B061-8481C63432E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8323BF9D-AD91-4DDC-B061-8481C63432E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
