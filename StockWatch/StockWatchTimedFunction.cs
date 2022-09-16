@@ -1,14 +1,13 @@
 using System;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
 namespace StockWatch
 {
-    public class StockWatchTimedFunction
+    public class StockWatchFuncTimedFunction
     {
         [FunctionName("StockWatchTimedFunction")]
-        public void Run([TimerTrigger("1 * * * *",
+        public static void Run([TimerTrigger("1 1 * * *",
             #if DEBUG
                 RunOnStartup = true
             #else
