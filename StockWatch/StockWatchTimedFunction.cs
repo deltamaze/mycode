@@ -1,6 +1,9 @@
 using System;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
+using Autofac;
+using static System.Net.Mime.MediaTypeNames;
+
 
 namespace StockWatch
 {
@@ -16,6 +19,20 @@ namespace StockWatch
             )]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+            try
+            {
+                IContainer container = ContainerConfig.Configure();
+
+                using (ILifetimeScope scope = container.BeginLifetimeScope())
+                {
+                    IApplication app = scope.Resolve<IApplication>();
+                    app.Run(log).Wait();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.LogError(ex, "Unhandled Exception");
+            }
         }
     }
 }

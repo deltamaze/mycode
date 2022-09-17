@@ -16,4 +16,10 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataMonitors\" />
+    <Folder Include="Configuration\" />
+    <Folder Include="Data\" />
+    <Folder Include="OutgoingMessaging\" />
+  </ItemGroup>
 </Project>
