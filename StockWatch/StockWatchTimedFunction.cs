@@ -21,12 +21,12 @@ namespace StockWatch
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
             try
             {
-                IContainer container = ContainerConfig.Configure();
+                IContainer container = ContainerConfig.Configure(log);
 
                 using (ILifetimeScope scope = container.BeginLifetimeScope())
                 {
                     IApplication app = scope.Resolve<IApplication>();
-                    app.Run(log).Wait();
+                    app.Run().Wait();
                 }
             }
             catch (Exception ex)

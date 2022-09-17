@@ -61,7 +61,7 @@ namespace StockWatch.Notifiers
             //     System.Text.Encoding.UTF8.GetBytes(strBearerRequest)
             // );
             WebRequest request = WebRequest.Create(postTweetUrl);
-            request.Headers.Add("Authorization", "Bearer AAAAAAAAAAAAAAAAAAAAAFTmWAEAAAAACenabSeS4ahNnnmwcm1iYjhWXPE%3DD8l92zGSgAyHirSmrSk9JIcn2RTpW59o2Xg3bF1ZPhgmIR8AHp" );
+            request.Headers.Add("Authorization", "TOKENHERE" );
             WebResponse response = request.GetResponse();
             // WebRequest request = WebRequest.Create(postTweetUrl);
             // request.Headers.Add("Authorization", "Bearer " + token.Value);

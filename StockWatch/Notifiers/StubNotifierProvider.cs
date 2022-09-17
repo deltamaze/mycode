@@ -1,21 +1,21 @@
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using StockWatch.Assets;
-using StockWatch.Logging;
 
 namespace StockWatch.Notifiers
 {
     public class StubNotifierProvider : INotifierProvider
     {
-        private ILoggingProcessor logger;
-        public StubNotifierProvider(ILoggingProcessor logger)
+        private ILogger log;
+        public StubNotifierProvider(ILogger log)
         {
-            this.logger = logger;
+            this.log = log;
         }
         public void Notify(List<AssetModel> assets)
         {
             foreach(AssetModel asset in assets)
             {
-                logger.Info
+                log.LogInformation
                 (
                     $"Notify Stub for Asset {asset.Symbol}\n"+
                     $"Change Percent: {asset.PercentChange} etc.."

@@ -4,6 +4,14 @@
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="DataMonitors\**" />
+    <Compile Remove="OutgoingMessaging\**" />
+    <EmbeddedResource Remove="DataMonitors\**" />
+    <EmbeddedResource Remove="OutgoingMessaging\**" />
+    <None Remove="DataMonitors\**" />
+    <None Remove="OutgoingMessaging\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="6.4.0" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.1.1" />
   </ItemGroup>
@@ -17,9 +25,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataMonitors\" />
     <Folder Include="Configuration\" />
-    <Folder Include="Data\" />
-    <Folder Include="OutgoingMessaging\" />
   </ItemGroup>
 </Project>

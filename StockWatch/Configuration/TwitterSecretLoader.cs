@@ -8,10 +8,11 @@ namespace StockWatch.Configuration
     public class TwitterSecretLoader : ISecretLoader
     {
         private SecretsDataModel secrets;
+        private ILogger log;
         public TwitterSecretLoader(SecretsDataModel secrets, ILogger log)
         {
             this.secrets = secrets;
-            this.logger = logger;
+            this.log = log;
         }
         public void Load()
         {
@@ -22,7 +23,7 @@ namespace StockWatch.Configuration
                 this.secrets.TwitterConnData = JsonSerializer.Deserialize<TwitterConnData>(fileContent);
                 return;
             }
-            logger.Warn("No twitter.json file found, unable to load Api Key/Secret");
+            log.LogWarning("No twitter.json file found, unable to load Api Key/Secret");
 
         }
     }
