@@ -40,8 +40,8 @@ namespace StockWatch
             log.LogInformation("Load Secrets from json");
             secretProcessor.LoadSecrets();
 
-            //log.LogInformation("Connect to Database");
-            //await dbProvider.ConnectToDatabase();
+            log.LogInformation("Connect to Database");
+            await dbProvider.ConnectToDatabase();
 
             //log.LogInformation("Get Recent Assets Activity From Web Endpoints");
             //runData.Assets = assetProcessors.GetAssets();
