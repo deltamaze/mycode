@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs;
+using Azure.Data.Tables;
 using StockWatch.Assets;
 
 
@@ -13,16 +13,24 @@ namespace StockWatch.Data
 {
     public class AzureStorageProvider : IDataStorageProvider
     {
-        var host = Environment.GetEnvironmentVariable("AZURE_STORAGE_HOST");
-        var account = Environment.GetEnvironmentVariable("AZURE_STORAGE_ACCOUNT");
-        var container = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONTAINER");
-        var emulator = account == "devstoreaccount1";
-        var uri = $"https://{(emulator ? $"{host}/{account}" : $"{account}.{host}")}/{container}";
+        string connectionString = Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTIONSTRING");
 
-        public Task ConnectToDataStorage()
+        public async Task ConnectToDataStorage()
         {
-            var client = new BlobContainerClient(new Uri(""), new DefaultAzureCredential());
-            return Task.CompletedTask;
+            #if DEBUG
+                connectionString = "UseDevelopmentStorage=true";
+            #endif
+            var client = new TableClient(connectionString,"StockWatch");
+            await client.CreateIfNotExistsAsync();
+            // client.GetEntity<string>()
+            client.AddEntity<AssetModel>(new AssetModel() {
+                Symbol = "TEST",
+                PartitionKey = "TEST",
+                Timestamp = DateTime.UtcNow,
+                ReportDate = DateTime.UtcNow,
+                RowKey = "TESTROW"
+            });
+            return;
         }
 
         public async Task<Dictionary<string, AssetHistoryModel>> GetHistory(List<AssetModel> assets)
