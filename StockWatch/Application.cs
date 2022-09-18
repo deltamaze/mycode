@@ -12,14 +12,14 @@ namespace StockWatch
     {
         private IAssetProcessor assetProcessors;
         private RunTimeDataModel runData;
-        private IDatabaseProvider dbProvider;
+        private IDataStorageProvider dbProvider;
         private INotifierProcessor notifierProcessor;
         private ISecretProcessor secretProcessor;
         private ILogger log;
         public Application(
             IAssetProcessor assetProcessors,
             RunTimeDataModel runData,
-            IDatabaseProvider dbProvider,
+            IDataStorageProvider dbProvider,
             INotifierProcessor notifierProcessor,
             ISecretProcessor secretProcessor,
             ILogger log
@@ -41,7 +41,7 @@ namespace StockWatch
             secretProcessor.LoadSecrets();
 
             log.LogInformation("Connect to Database");
-            await dbProvider.ConnectToDatabase();
+            await dbProvider.ConnectToDataStorage();
 
             //log.LogInformation("Get Recent Assets Activity From Web Endpoints");
             //runData.Assets = assetProcessors.GetAssets();

@@ -17,7 +17,7 @@ namespace StockWatch
             builder.RegisterInstance<ILogger>(log);
             builder.RegisterType<RunTimeDataModel>().SingleInstance();
             builder.RegisterType<SecretsDataModel>().SingleInstance();
-            builder.RegisterType<StubDatabaseProvider>().As<IDatabaseProvider>().SingleInstance();
+            builder.RegisterType<AzureStorageProvider>().As<IDataStorageProvider>().SingleInstance();
             //builder.RegisterType<TwitterSecretLoader>().As<ISecretLoader>().SingleInstance();
             builder.RegisterType<SecretProcessor>().As<ISecretProcessor>().SingleInstance();
             // builder.RegisterType<YahooStocks>().As<IAssetsProvider>().SingleInstance();

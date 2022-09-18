@@ -4,9 +4,9 @@ using StockWatch.Assets;
 
 namespace StockWatch.Data
 {
-    public interface IDatabaseProvider
+    public interface IDataStorageProvider
     {
-        Task ConnectToDatabase();
+        Task ConnectToDataStorage();
         Task<Dictionary<string,AssetHistoryModel>> GetHistory(List<AssetModel> asset);
 
         Task SaveHistory(List<AssetModel> asset);
