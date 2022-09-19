@@ -7,9 +7,8 @@ namespace StockWatch.Data
     public interface IDataStorageProvider
     {
         Task ConnectToDataStorage();
-        Task<Dictionary<string,AssetHistoryModel>> GetHistory(List<AssetModel> asset);
-
-        Task SaveHistory(List<AssetModel> asset);
+        Task<AssetModel> PullExistingRecord(AssetModel asset);
+        Task SaveHistory(AssetModel asset);
     
     }
 }

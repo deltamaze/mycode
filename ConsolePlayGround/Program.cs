@@ -1,12 +1,11 @@
 ﻿using ConsolePlayGround;
 
-class Program
+internal class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         Console.WriteLine("Hello, World!");
-        var test = (new DateTime(2022, 10, 3) - DateTime.Now).TotalDays;
-        Console.WriteLine(DatePlay.DaysBetweenTwoDates(new DateTime(2022, 10, 3), DateTime.Now);
+        Console.WriteLine(DatePlay.DaysBetweenTwoDates(new DateTime(2022, 10, 3), DateTime.Now));
     }
 
 }
