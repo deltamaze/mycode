@@ -3,7 +3,6 @@
 using Autofac;
 using Microsoft.Extensions.Logging;
 using StockWatch.Assets;
-using StockWatch.Configuration;
 using StockWatch.Data;
 using StockWatch.Notifiers;
 
@@ -16,10 +15,8 @@ namespace StockWatch
             var builder = new ContainerBuilder();
             builder.RegisterInstance<ILogger>(log);
             builder.RegisterType<RunTimeDataModel>().SingleInstance();
-            builder.RegisterType<SecretsDataModel>().SingleInstance();
             builder.RegisterType<AzureStorageProvider>().As<IDataStorageProvider>().SingleInstance();
-            //builder.RegisterType<TwitterSecretLoader>().As<ISecretLoader>().SingleInstance();
-            builder.RegisterType<SecretProcessor>().As<ISecretProcessor>().SingleInstance();
+            // builder.RegisterType<TwitterSecretLoader>().As<ISecretLoader>().SingleInstance();
             // builder.RegisterType<YahooStocks>().As<IAssetsProvider>().SingleInstance();
             builder.RegisterType<StubAssetsProvider>().As<IAssetsProvider>().SingleInstance();
             builder.RegisterType<AssetProcessor>().As<IAssetProcessor>().SingleInstance();

@@ -1,27 +1,40 @@
+﻿using StockWatch.Data;
 using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace StockWatch.Assets
 {
 
     public class AssetProcessor : IAssetProcessor
     {
-        IAssetsProvider[] providers;
-        public AssetProcessor(IAssetsProvider[] assetProviders)
+        private readonly IAssetsProvider[] assetsProviders;
+        private readonly IDataStorageProvider dbProvider;
+        public AssetProcessor(IAssetsProvider[] assetProviders, IDataStorageProvider dbProvider)
         {
-            this.providers = assetProviders;
+            this.assetsProviders = assetProviders;
+            this.dbProvider = dbProvider;
         }
-        public List<AssetModel> GetAssets()
+        public async Task<List<AssetModel>> GetAssets()
         {
             List<AssetModel> assets = new List<AssetModel>();
-            foreach (IAssetsProvider provider in providers)
+            foreach (IAssetsProvider provider in assetsProviders)
             {
                 assets.AddRange(provider.GetAssets());
             }
+
             return assets;
         }
-        public int RemoveAssetsBelowTreshold(List<AssetModel> assets)
+        public async Task SaveHistory(List<AssetModel> assets)
+        {
+            foreach (AssetModel asset in assets)
+            {
+                dbProvider.SaveHistory(asset);
+            }
+        }
+        public async Task<int> RemoveNonQualifyingAssets(List<AssetModel> assets)
         {
             int assetsLen = assets.Count();
             int removeCount = 0;
@@ -32,27 +45,11 @@ namespace StockWatch.Assets
                     CheckAvgVol(assets[x]);
                 if (!keepAsset)
                 {
-                    removeCount +=1;
+                    removeCount += 1;
                     assets.RemoveAt(x);
                 }
             }
-            return removeCount;
-        }
-        public int RemoveFromRecentReporting(List<AssetModel> assets,
-            Dictionary<string, AssetHistoryModel> assetsHistory)
-        {
-            int assetsLen = assets.Count();
-            int removeCount = 0;
-            for (int x = assetsLen - 1; x >= 0; x -= 1)
-            {
-                bool keepAsset = 
-                    CheckHistory(assetsHistory[assets[x].Symbol]);
-                if (!keepAsset)
-                {
-                    removeCount +=1;
-                    assets.RemoveAt(x);
-                }
-            }
+
             return removeCount;
         }
         private bool CheckPercentChange(AssetModel asset)
@@ -61,6 +58,7 @@ namespace StockWatch.Assets
             {
                 return true;
             }
+
             return false;
         }
 
@@ -70,6 +68,7 @@ namespace StockWatch.Assets
             {
                 return true;
             }
+
             return false;
         }
 
@@ -79,21 +78,20 @@ namespace StockWatch.Assets
             {
                 return true;
             }
+
             return false;
         }
 
         private bool CheckHistory(AssetHistoryModel assetsHistory)
         {
-            if(DateTime.Compare(assetsHistory.LastEntry,
-                System.DateTime.Now.AddDays(-3))<0)
+            if (DateTime.Compare(assetsHistory.LastEntry,
+                System.DateTime.Now.AddDays(-3)) < 0)
             {
                 // last entry is earlier than 3 days ago, so good to re-report
                 return true;
             }
+
             return false;
         }
-
-
     }
-
 }

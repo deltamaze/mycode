@@ -6,15 +6,12 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-
 namespace StockWatch.Assets
 {
     public class YahooStocks : IAssetsProvider
     {
         private const string GainingStocksUrl = "https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?formatted=true&lang=en-US&region=US&scrIds=day_gainers&start=0&count=10";
         private const string LosingStocksUrl = "https://query2.finance.yahoo.com/v1/finance/screener/predefined/saved?formatted=true&lang=en-US&region=US&scrIds=day_losers&start=0&count=10";
-
-        private static readonly HttpClient client = new HttpClient();
 
         public IEnumerable<AssetModel> GetAssets()
         {

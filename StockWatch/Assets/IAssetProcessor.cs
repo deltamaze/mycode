@@ -1,11 +1,12 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace StockWatch.Assets
 {
     public interface IAssetProcessor
     {
-        List<AssetModel> GetAssets();
-        int RemoveAssetsBelowTreshold(List<AssetModel> assets);
-        int RemoveFromRecentReporting(List<AssetModel> assets, Dictionary<string, AssetHistoryModel> assetsHistory);
+        Task<List<AssetModel>> GetAssets();
+        Task<int> RemoveNonQualifyingAssets(List<AssetModel> assets);
+        Task SaveHistory(List<AssetModel> assets);
     }
-
 }
