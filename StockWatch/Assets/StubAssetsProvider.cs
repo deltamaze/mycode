@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StockWatch.Assets
 {
     public class StubAssetsProvider : IAssetsProvider
     {
-        public IEnumerable<AssetModel> GetAssets()
+        public Task<IEnumerable<AssetModel>> GetAssets()
         {
             List<AssetModel> returnAssets = new();
             //returnAssets.Add(new AssetModel(){
@@ -18,7 +19,7 @@ namespace StockWatch.Assets
             //    AvgVolume = 31000000M,
             //    UnitPrice = 25.3M,
             //    ReportDate = System.DateTime.Now
-                
+
             //});
             //returnAssets.Add(new AssetModel(){
             //    Id = Guid.NewGuid().ToString(),
@@ -53,7 +54,11 @@ namespace StockWatch.Assets
             //    UnitPrice = 22M,
             //    ReportDate = System.DateTime.Now
             //});
-            return returnAssets;
+            var test = new Task<IEnumerable<AssetModel>>(() =>
+            {
+                return returnAssets;
+            });
+            return test;
         }
     }
 }

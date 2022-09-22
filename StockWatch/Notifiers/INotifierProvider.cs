@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using StockWatch.Assets;
 
 namespace StockWatch.Notifiers
@@ -7,5 +7,4 @@ namespace StockWatch.Notifiers
     {
         void Notify(List<AssetModel> assets);
     }
-    
 }

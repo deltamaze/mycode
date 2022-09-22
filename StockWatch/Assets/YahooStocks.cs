@@ -13,32 +13,32 @@ namespace StockWatch.Assets
         private const string GainingStocksUrl = "https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?formatted=true&lang=en-US&region=US&scrIds=day_gainers&start=0&count=10";
         private const string LosingStocksUrl = "https://query2.finance.yahoo.com/v1/finance/screener/predefined/saved?formatted=true&lang=en-US&region=US&scrIds=day_losers&start=0&count=10";
 
-        public IEnumerable<AssetModel> GetAssets()
+        public async Task<IEnumerable<AssetModel>> GetAssets()
         {
-            List<AssetModel> returnAssets = new List<AssetModel>();
-            returnAssets.AddRange(GainingAssets());
-            returnAssets.AddRange(LosingAssets());
+            List<AssetModel> returnAssets = new();
+            returnAssets.AddRange(await GainingAssets());
+            returnAssets.AddRange(await LosingAssets());
             return returnAssets;
         }
-        private IEnumerable<AssetModel> GainingAssets()
+        private async Task<IEnumerable<AssetModel>> GainingAssets()
         {
-            YahooStockModel assets = GetYahooStocks(GainingStocksUrl);
+            YahooStockModel assets = await GetYahooStocks(GainingStocksUrl);
             return ParseYahooStocks(assets);
         }
-        private IEnumerable<AssetModel> LosingAssets()
+        private async Task<IEnumerable<AssetModel>> LosingAssets()
         {
-            YahooStockModel assets = GetYahooStocks(LosingStocksUrl);
+            YahooStockModel assets = await GetYahooStocks(LosingStocksUrl);
             return ParseYahooStocks(assets);
         }
-        private YahooStockModel GetYahooStocks(string url)
+        private static async Task<YahooStockModel> GetYahooStocks(string url)
         {
-            WebClient client = new WebClient();
-            string reply = client.DownloadString(url);
+            HttpClient client = new();
+            string reply = await client.GetStringAsync(url);
             return JsonSerializer.Deserialize<YahooStockModel>(reply);
         }
-        private List<AssetModel> ParseYahooStocks(YahooStockModel yahooStocks)
+        private static List<AssetModel> ParseYahooStocks(YahooStockModel yahooStocks)
         {
-            List<AssetModel> returnList = new List<AssetModel>();
+            List<AssetModel> returnList = new();
             // null checks
             if (
                 yahooStocks == null ||
@@ -52,12 +52,14 @@ namespace StockWatch.Assets
 
             foreach (var quote in yahooStocks.finance.result[0].quotes)
             {
-                AssetModel stock = new AssetModel();
-                stock.PartitionKey = "Stock";
-                stock.RowKey = quote.symbol;
-                stock.Timestamp = DateTime.UtcNow;
-                stock.Company = quote.longName;
-                stock.Symbol = quote.symbol;
+                AssetModel stock = new()
+                {
+                    PartitionKey = "Stock",
+                    RowKey = quote.symbol,
+                    Timestamp = DateTime.UtcNow,
+                    Company = quote.longName,
+                    Symbol = quote.symbol
+                };
                 stock.Url = @"https://finance.yahoo.com/quote/" + stock.Symbol + @"/";
                 stock.MarketCap = decimal.Parse(quote.marketCap.longFmt.Replace(",", ""));
                 stock.PercentChange = ((decimal) quote.regularMarketChangePercent.raw);

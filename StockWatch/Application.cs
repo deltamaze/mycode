@@ -8,7 +8,7 @@ using StockWatch.Notifiers;
 namespace StockWatch
 {
 
-    class Application : IApplication
+    public class Application : IApplication
     {
         private readonly IAssetProcessor assetProcessors;
         private readonly RunTimeDataModel runData;

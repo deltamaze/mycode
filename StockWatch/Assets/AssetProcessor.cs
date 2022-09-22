@@ -19,10 +19,10 @@ namespace StockWatch.Assets
         }
         public async Task<List<AssetModel>> GetAssets()
         {
-            List<AssetModel> assets = new List<AssetModel>();
+            List<AssetModel> assets = new();
             foreach (IAssetsProvider provider in assetsProviders)
             {
-                assets.AddRange(provider.GetAssets());
+                assets.AddRange(await provider.GetAssets());
             }
 
             return assets;
@@ -31,61 +31,40 @@ namespace StockWatch.Assets
         {
             foreach (AssetModel asset in assets)
             {
-                dbProvider.SaveHistory(asset);
+                await dbProvider.SaveHistory(asset);
             }
         }
         public async Task<int> RemoveNonQualifyingAssets(List<AssetModel> assets)
         {
-            int assetsLen = assets.Count();
+            int assetsLen = assets.Count;
             int removeCount = 0;
             for (int x = assetsLen - 1; x >= 0; x -= 1)
             {
                 bool keepAsset = CheckPercentChange(assets[x]) ||
                     CheckMarketCap(assets[x]) ||
-                    CheckAvgVol(assets[x]);
+                    CheckAvgVol(assets[x]) ||
+                    await CheckHistory(assets[x]);
                 if (!keepAsset)
                 {
                     removeCount += 1;
                     assets.RemoveAt(x);
+                    continue;
                 }
             }
 
             return removeCount;
         }
-        private bool CheckPercentChange(AssetModel asset)
+        private static bool CheckPercentChange(AssetModel asset) => asset.PercentChange is > 20 or < (-20);
+
+        private static bool CheckMarketCap(AssetModel asset) => asset.MarketCap > 5000000000;
+
+        private static bool CheckAvgVol(AssetModel asset) => asset.AvgVolume > 100000;
+
+        private async Task<bool> CheckHistory(AssetModel asset)
         {
-            if (asset.PercentChange > 20 || asset.PercentChange < -20)
-            {
-                return true;
-            }
+            AssetModel prevRecord = await dbProvider.PullExistingRecord(asset);
 
-            return false;
-        }
-
-        private bool CheckMarketCap(AssetModel asset)
-        {
-            if (asset.MarketCap > 5000000000)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool CheckAvgVol(AssetModel asset)
-        {
-            if (asset.AvgVolume > 100000)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool CheckHistory(AssetHistoryModel assetsHistory)
-        {
-            if (DateTime.Compare(assetsHistory.LastEntry,
-                System.DateTime.Now.AddDays(-3)) < 0)
+            if (prevRecord != null && DateTimeOffset.Compare((DateTimeOffset) prevRecord.Timestamp,DateTime.UtcNow.AddDays(-3)) < 0)
             {
                 // last entry is earlier than 3 days ago, so good to re-report
                 return true;

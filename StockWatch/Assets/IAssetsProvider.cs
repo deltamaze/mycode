@@ -1,9 +1,10 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StockWatch.Assets
 {
     public interface IAssetsProvider
     {
-        IEnumerable<AssetModel> GetAssets();
+        Task<IEnumerable<AssetModel>> GetAssets();
     }
 }
