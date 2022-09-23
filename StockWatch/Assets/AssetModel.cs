@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using Azure;
 using Azure.Data.Tables;
 
@@ -18,6 +19,17 @@ namespace StockWatch.Assets
         public DateTimeOffset? Timestamp { get; set; }
         public ETag ETag { get; set; }
         public bool PreviousReport { get; set; }
+
+        public AssetModel(string partitionKey, string rowKey)
+        {
+            this.PartitionKey = partitionKey;
+            this.RowKey = rowKey;
+            this.Timestamp = DateTimeOffset.Now;
+        }
+
+        public AssetModel()
+        {
+
+        }
     }
-    
 }

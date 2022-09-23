@@ -20,12 +20,12 @@ namespace StockWatch.Assets
             returnAssets.AddRange(await LosingAssets());
             return returnAssets;
         }
-        private async Task<IEnumerable<AssetModel>> GainingAssets()
+        private static async Task<IEnumerable<AssetModel>> GainingAssets()
         {
             YahooStockModel assets = await GetYahooStocks(GainingStocksUrl);
             return ParseYahooStocks(assets);
         }
-        private async Task<IEnumerable<AssetModel>> LosingAssets()
+        private static async Task<IEnumerable<AssetModel>> LosingAssets()
         {
             YahooStockModel assets = await GetYahooStocks(LosingStocksUrl);
             return ParseYahooStocks(assets);
@@ -52,11 +52,9 @@ namespace StockWatch.Assets
 
             foreach (var quote in yahooStocks.finance.result[0].quotes)
             {
-                AssetModel stock = new()
+                AssetModel stock = new("Stock", quote.symbol)
                 {
                     PartitionKey = "Stock",
-                    RowKey = quote.symbol,
-                    Timestamp = DateTime.UtcNow,
                     Company = quote.longName,
                     Symbol = quote.symbol
                 };

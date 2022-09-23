@@ -19,24 +19,37 @@ namespace StockWatch.Data
 
         public async Task ConnectToDataStorage()
         {
-            #if DEBUG
-                connectionString = "UseDevelopmentStorage=true";
-            #endif
+#if DEBUG
+            connectionString = "UseDevelopmentStorage=true";
+#endif
             client = new TableClient(connectionString, "StockWatch");
             await client.CreateIfNotExistsAsync();
-            return;
         }
 
         public async Task<AssetModel> PullExistingRecord(AssetModel asset)
         {
+            if (client is null)
+            {
+                await ConnectToDataStorage();
+            }
             var prevAssetModel = await client.GetEntityAsync<AssetModel>(asset.PartitionKey, asset.RowKey);
             return prevAssetModel;
         }
 
         public async Task SaveHistory(AssetModel asset)
         {
-            await client.UpsertEntityAsync<AssetModel>(asset);
-            return;
+            if (client is null)
+            {
+                await ConnectToDataStorage();
+            }
+            try
+            {
+                await client.UpsertEntityAsync<AssetModel>(asset,TableUpdateMode.Replace);
+            }
+            catch(Exception e)
+            {
+                return;
+            }
         }
     }
 }
