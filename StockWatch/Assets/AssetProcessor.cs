@@ -40,9 +40,9 @@ namespace StockWatch.Assets
             int removeCount = 0;
             for (int x = assetsLen - 1; x >= 0; x -= 1)
             {
-                bool keepAsset = CheckPercentChange(assets[x]) ||
-                    CheckMarketCap(assets[x]) ||
-                    CheckAvgVol(assets[x]) ||
+                bool keepAsset = CheckPercentChange(assets[x]) &&
+                    CheckMarketCap(assets[x]) &&
+                    CheckAvgVol(assets[x]) &&
                     await CheckHistory(assets[x]);
                 if (!keepAsset)
                 {

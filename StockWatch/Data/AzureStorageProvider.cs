@@ -32,6 +32,7 @@ namespace StockWatch.Data
             {
                 await ConnectToDataStorage();
             }
+            await client.QueryAsync<AssetModel>(new string[] {""});
             var prevAssetModel = await client.GetEntityAsync<AssetModel>(asset.PartitionKey, asset.RowKey);
             return prevAssetModel;
         }

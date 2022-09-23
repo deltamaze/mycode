@@ -20,8 +20,8 @@ namespace StockWatch
             // builder.RegisterType<YahooStocks>().As<IAssetsProvider>().SingleInstance();
             builder.RegisterType<StubAssetsProvider>().As<IAssetsProvider>().SingleInstance();
             builder.RegisterType<AssetProcessor>().As<IAssetProcessor>().SingleInstance();
+            builder.RegisterType<TwitterNotifierProvider>().As<INotifierProvider>().SingleInstance();
             builder.RegisterType<StubNotifierProvider>().As<INotifierProvider>().SingleInstance();
-            // builder.RegisterType<TwitterNotifierProvider>().As<INotifierProvider>().SingleInstance();
             builder.RegisterType<NotifierProcessor>().As<INotifierProcessor>().SingleInstance();
             builder.RegisterType<Application>().As<IApplication>();
             return builder.Build();
