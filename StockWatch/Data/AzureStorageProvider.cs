@@ -1,11 +1,13 @@
 ﻿// Code By Wpooley
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Data.Tables;
 using StockWatch.Assets;
 
@@ -32,9 +34,16 @@ namespace StockWatch.Data
             {
                 await ConnectToDataStorage();
             }
-            await client.QueryAsync<AssetModel>(new string[] {""});
-            var prevAssetModel = await client.GetEntityAsync<AssetModel>(asset.PartitionKey, asset.RowKey);
-            return prevAssetModel;
+
+            var query =  client.QueryAsync<AssetModel>($"PartitionKey eq '{asset.PartitionKey}' and RowKey eq '{asset.RowKey}'");
+            var enumerator = query.GetAsyncEnumerator();
+            bool recordExist = await enumerator.MoveNextAsync(); //We should only have one or zero items
+            if (recordExist)
+            {
+                return enumerator.Current;
+            }
+
+            return null;
         }
 
         public async Task SaveHistory(AssetModel asset)
@@ -43,14 +52,8 @@ namespace StockWatch.Data
             {
                 await ConnectToDataStorage();
             }
-            try
-            {
-                await client.UpsertEntityAsync<AssetModel>(asset,TableUpdateMode.Replace);
-            }
-            catch(Exception e)
-            {
-                return;
-            }
+
+            await client.UpsertEntityAsync<AssetModel>(asset, TableUpdateMode.Replace);
         }
     }
 }

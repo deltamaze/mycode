@@ -17,9 +17,9 @@ namespace StockWatch.Notifiers
         public TwitterNotifierProvider(ILogger log)
         {
             accessSecret = Environment.GetEnvironmentVariable("StockWatchTwitterAccessSecret");
-            accessToken = Environment.GetEnvironmentVariable("StockWatchTwitterAccessSecret");
-            apiKey = Environment.GetEnvironmentVariable("StockWatchTwitterAccessSecret");
-            apiSecret = Environment.GetEnvironmentVariable("StockWatchTwitterAccessSecret");
+            accessToken = Environment.GetEnvironmentVariable("StockWatchTwitterAccessToken");
+            apiKey = Environment.GetEnvironmentVariable("StockWatchTwitterApiKey");
+            apiSecret = Environment.GetEnvironmentVariable("StockWatchTwitterApiKey");
             this.log = log;
 
         }

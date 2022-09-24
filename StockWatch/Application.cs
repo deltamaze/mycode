@@ -1,4 +1,5 @@
-﻿using System.Reflection.Metadata.Ecma335;
+﻿using System;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using StockWatch.Assets;
@@ -29,34 +30,40 @@ namespace StockWatch
 
         public async Task Run()
         {
-            log.LogInformation("Starting Run");
-
-            log.LogInformation("Get Recent Assets Activity From Web Endpoints");
-            runData.Assets = await assetProcessors.GetAssets();
-
-            log.LogInformation($"Assets pulled: {runData.Assets.Count}");
-            if (this.EndRunIfNoAssets())
+            try
             {
-                return;
+                log.LogInformation("Starting Run");
+
+                log.LogInformation("Get Recent Assets Activity From Web Endpoints");
+                runData.Assets = await assetProcessors.GetAssets();
+
+                log.LogInformation($"Assets pulled: {runData.Assets.Count}");
+                if (this.EndRunIfNoAssets())
+                {
+                    return;
+                }
+
+                log.LogInformation("Clear Assets that don't meet requirements");
+                int removeCount = await assetProcessors.RemoveNonQualifyingAssets(runData.Assets);
+                log.LogInformation($"Assets Removed:{removeCount} Assets Remaining:{runData.Assets.Count}");
+
+                if (this.EndRunIfNoAssets())
+                {
+                    return;
+                }
+
+                log.LogInformation("Save the remaining assets into the DB");
+                await assetProcessors.SaveHistory(runData.Assets);
+
+                log.LogInformation("Broadcast Alerts to Web Endpoints");
+                notifierProcessor.Notify(runData.Assets);
+
+                log.LogInformation("Ending Run");
             }
-
-            log.LogInformation("Clear Assets that don't meet requirements");
-            int removeCount = await assetProcessors.RemoveNonQualifyingAssets(runData.Assets);
-            log.LogInformation($"Assets Removed:{removeCount} Assets Remaining:{runData.Assets.Count}");
-
-            if (this.EndRunIfNoAssets())
+            catch (Exception e)
             {
-                return;
+                log.LogError(e, $"Unhandled Exception =>{e.Message}");
             }
-
-            log.LogInformation("Save the remaining assets into the DB");
-            await assetProcessors.SaveHistory(runData.Assets);
-
-            log.LogInformation("Broadcast Alerts to Web Endpoints");
-            notifierProcessor.Notify(runData.Assets);
-
-            log.LogInformation("Ending Run");
-
         }
 
         private bool EndRunIfNoAssets()
