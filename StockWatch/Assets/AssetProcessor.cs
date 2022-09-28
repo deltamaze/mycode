@@ -1,8 +1,7 @@
-﻿using StockWatch.Data;
+﻿using Microsoft.Extensions.Logging;
+using StockWatch.Data;
 using System;
 using System.Collections.Generic;
-using System.Formats.Asn1;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace StockWatch.Assets
@@ -12,10 +11,12 @@ namespace StockWatch.Assets
     {
         private readonly IAssetsProvider[] assetsProviders;
         private readonly IDataStorageProvider dbProvider;
-        public AssetProcessor(IAssetsProvider[] assetProviders, IDataStorageProvider dbProvider)
+        private readonly ILogger log;
+        public AssetProcessor(IAssetsProvider[] assetProviders, IDataStorageProvider dbProvider, ILogger log)
         {
             this.assetsProviders = assetProviders;
             this.dbProvider = dbProvider;
+            this.log = log;
         }
         public async Task<List<AssetModel>> GetAssets()
         {
@@ -54,22 +55,55 @@ namespace StockWatch.Assets
 
             return removeCount;
         }
-        private static bool CheckPercentChange(AssetModel asset) => asset.PercentChange is > 20 or < (-20);
+        private bool CheckPercentChange(AssetModel asset)
+        {
+            if (asset.PercentChange is > 20 or < (-20))
+            {
+                return true;
+            }
 
-        private static bool CheckMarketCap(AssetModel asset) => asset.MarketCap > 5000000000;
+            this.log.LogInformation($"Asset {asset.Symbol} Percent Change does not qualify. Value => {asset.PercentChange}");
+            return false;
+        }
 
-        private static bool CheckAvgVol(AssetModel asset) => asset.AvgVolume > 100000;
+        private bool CheckMarketCap(AssetModel asset)
+        {
+            if (asset.MarketCap > 5000000000)
+            {
+                return true;
+            }
+
+            this.log.LogInformation($"Asset {asset.Symbol} Market Cap does not qualify. Value => {asset.MarketCap}");
+            return false;
+        }
+
+        private bool CheckAvgVol(AssetModel asset)
+        {
+            if (asset.AvgVolume > 100000)
+            {
+                return true;
+            }
+
+            this.log.LogInformation($"Asset {asset.Symbol} Avg Vol does not qualify. Value => {asset.AvgVolume}");
+            return false;
+        }
 
         private async Task<bool> CheckHistory(AssetModel asset)
         {
             AssetModel prevRecord = await dbProvider.PullExistingRecord(asset);
 
-            if (prevRecord != null && DateTimeOffset.Compare((DateTimeOffset) prevRecord.Timestamp,DateTime.UtcNow.AddDays(-3)) < 0)
+            if (prevRecord == null)
             {
-                // last entry is earlier than 3 days ago, so good to re-report
                 return true;
             }
 
+            if ( DateTimeOffset.Compare((DateTimeOffset) prevRecord.Timestamp, DateTime.UtcNow.AddDays(-3)) < 0)
+            {
+                // last entry is older 3 days ago, and should trigger notification
+                return true;
+            }
+
+            this.log.LogInformation($"Asset {asset.Symbol} History Check does not qualify.");
             return false;
         }
     }

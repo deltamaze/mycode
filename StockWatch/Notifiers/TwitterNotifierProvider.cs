@@ -23,7 +23,7 @@ namespace StockWatch.Notifiers
             this.log = log;
 
         }
-        public void Notify(List<AssetModel> assets)
+        public async void Notify(List<AssetModel> assets)
         {
             log.LogInformation("Starting Tweet Process");
             if (string.IsNullOrWhiteSpace(accessSecret) ||
@@ -38,7 +38,7 @@ namespace StockWatch.Notifiers
 
             string tweetMessage = FormatTweetMessage(assets);
             TwitterClient client = new(apiKey, apiSecret, accessToken, accessSecret);
-            client.Tweets.PublishTweetAsync("");
+            await client.Tweets.PublishTweetAsync(tweetMessage);
             log.LogInformation("Tweets Posted");
         }
 

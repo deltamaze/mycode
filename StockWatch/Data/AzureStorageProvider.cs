@@ -38,12 +38,8 @@ namespace StockWatch.Data
             var query =  client.QueryAsync<AssetModel>($"PartitionKey eq '{asset.PartitionKey}' and RowKey eq '{asset.RowKey}'");
             var enumerator = query.GetAsyncEnumerator();
             bool recordExist = await enumerator.MoveNextAsync(); //We should only have one or zero items
-            if (recordExist)
-            {
-                return enumerator.Current;
-            }
-
-            return null;
+            
+            return recordExist ? enumerator.Current : null;
         }
 
         public async Task SaveHistory(AssetModel asset)
