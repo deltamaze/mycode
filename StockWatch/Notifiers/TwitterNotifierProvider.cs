@@ -19,7 +19,7 @@ namespace StockWatch.Notifiers
             accessSecret = Environment.GetEnvironmentVariable("StockWatchTwitterAccessSecret");
             accessToken = Environment.GetEnvironmentVariable("StockWatchTwitterAccessToken");
             apiKey = Environment.GetEnvironmentVariable("StockWatchTwitterApiKey");
-            apiSecret = Environment.GetEnvironmentVariable("StockWatchTwitterApiKey");
+            apiSecret = Environment.GetEnvironmentVariable("StockWatchTwitterApiSecret");
             this.log = log;
 
         }
@@ -36,10 +36,17 @@ namespace StockWatch.Notifiers
                 return;
             }
 
-            string tweetMessage = FormatTweetMessage(assets);
-            TwitterClient client = new(apiKey, apiSecret, accessToken, accessSecret);
-            await client.Tweets.PublishTweetAsync(tweetMessage);
-            log.LogInformation("Tweets Posted");
+            try
+            {
+                string tweetMessage = FormatTweetMessage(assets);
+                TwitterClient client = new(apiKey, apiSecret, accessToken, accessSecret);
+                await client.Tweets.PublishTweetAsync(tweetMessage);
+                log.LogInformation("Tweets Posted");
+            }
+            catch(Exception ex)
+            {
+                log.LogError(ex, $"Exception During Twitter Notification Attempt ex =>{ex.Message} innerex=> {(ex.InnerException != null ? ex.InnerException.Message : "null")}");
+            }
         }
 
         private static string FormatTweetMessage(List<AssetModel> assets)
