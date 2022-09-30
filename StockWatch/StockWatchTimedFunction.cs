@@ -10,7 +10,7 @@ namespace StockWatch
     public class StockWatchFuncTimedFunction
     {
         [FunctionName("StockWatchTimedFunction")]
-        public static void Run([TimerTrigger("1 1 * * *",
+        public static void Run([TimerTrigger("1 * * * *",
             #if DEBUG
                 RunOnStartup = true
             #else
