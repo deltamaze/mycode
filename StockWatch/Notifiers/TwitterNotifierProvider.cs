@@ -38,39 +38,31 @@ namespace StockWatch.Notifiers
 
             try
             {
-                string tweetMessage = FormatTweetMessage(assets);
-                TwitterClient client = new(apiKey, apiSecret, accessToken, accessSecret);
-                await client.Tweets.PublishTweetAsync(tweetMessage);
-                log.LogInformation("Tweets Posted");
+                // Twitter has character limit, so lets send one tweet per asset and keep message brief.
+                foreach (var asset in assets)
+                {
+                    string tweetMessage = FormatTweetMessage(asset);
+                    TwitterClient client = new(apiKey, apiSecret, accessToken, accessSecret);
+                    await client.Tweets.PublishTweetAsync(tweetMessage);
+                    log.LogInformation($"Tweet Posted for {asset.Symbol}");
+                    // wait a bit to not slam twitter api
+                    System.Threading.Thread.Sleep(5000);
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.LogError(ex, $"Exception During Twitter Notification Attempt ex =>{ex.Message} innerex=> {(ex.InnerException != null ? ex.InnerException.Message : "null")}");
             }
         }
 
-        private static string FormatTweetMessage(List<AssetModel> assets)
+        private static string FormatTweetMessage(AssetModel asset)
         {
 
-            bool skipInitialLinebreak = true;
             StringBuilder composedMessage = new();
-            foreach (AssetModel asset in assets)
-            {
-                if (skipInitialLinebreak)
-                {
-                    skipInitialLinebreak = false;
-                }
-                else
-                {
-                    composedMessage.AppendLine();
-                }
 
-                composedMessage.AppendLine($"Alert! {asset.Symbol} - {asset.Company}");
-                composedMessage.AppendLine($"Change Percent: {asset.PercentChange} ");
-                composedMessage.AppendLine($"Market Cap: {asset.MarketCap} ");
-                composedMessage.AppendLine($"Unit Value: {asset.UnitPrice}");
-                composedMessage.AppendLine($"More Info: {asset.Url}");
-            }
+            composedMessage.AppendLine($"{asset.Symbol} - {asset.Company}");
+            composedMessage.AppendLine($"Change Percent: {asset.PercentChange} ");
+            composedMessage.AppendLine($"More Info: {asset.Url}");
 
             return composedMessage.ToString();
         }
