@@ -10,9 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockWatch", "StockWatch\StockWatch.csproj", "{D847FC0D-2DEC-4245-A98C-7AF8B7285FA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockWatch", "StockWatch\StockWatch.csproj", "{D847FC0D-2DEC-4245-A98C-7AF8B7285FA0}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "PersonalSite", "PersonalSite\PersonalSite.njsproj", "{8323BF9D-AD91-4DDC-B061-8481C63432E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsolePlayGroundTest", "ConsolePlayGroundTest\ConsolePlayGroundTest.csproj", "{949B9D72-1CE7-43F7-917C-D0CF4F9866BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{8323BF9D-AD91-4DDC-B061-8481C63432E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8323BF9D-AD91-4DDC-B061-8481C63432E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8323BF9D-AD91-4DDC-B061-8481C63432E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{949B9D72-1CE7-43F7-917C-D0CF4F9866BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{949B9D72-1CE7-43F7-917C-D0CF4F9866BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{949B9D72-1CE7-43F7-917C-D0CF4F9866BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{949B9D72-1CE7-43F7-917C-D0CF4F9866BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

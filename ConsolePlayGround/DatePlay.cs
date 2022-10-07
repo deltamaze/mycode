@@ -15,5 +15,10 @@ namespace ConsolePlayGround
         {
             return (d1 - d2).TotalDays;
         }
+        public static DateTime AddWeeksToDate(DateTime d1, int weeks)
+        {
+            int days = weeks * 7;
+            return d1.AddDays(days);
+        }
     }
 }
