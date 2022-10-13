@@ -14,7 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockWatch", "StockWatch\St
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "PersonalSite", "PersonalSite\PersonalSite.njsproj", "{8323BF9D-AD91-4DDC-B061-8481C63432E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsolePlayGroundTest", "ConsolePlayGroundTest\ConsolePlayGroundTest.csproj", "{949B9D72-1CE7-43F7-917C-D0CF4F9866BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsolePlayGroundTest", "ConsolePlayGroundTest\ConsolePlayGroundTest.csproj", "{949B9D72-1CE7-43F7-917C-D0CF4F9866BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website", "Website\Website.csproj", "{F4F1366C-BFA6-44FE-8B45-B9713794E8F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{949B9D72-1CE7-43F7-917C-D0CF4F9866BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{949B9D72-1CE7-43F7-917C-D0CF4F9866BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{949B9D72-1CE7-43F7-917C-D0CF4F9866BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4F1366C-BFA6-44FE-8B45-B9713794E8F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4F1366C-BFA6-44FE-8B45-B9713794E8F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4F1366C-BFA6-44FE-8B45-B9713794E8F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4F1366C-BFA6-44FE-8B45-B9713794E8F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
