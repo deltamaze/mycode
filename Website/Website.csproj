@@ -7,8 +7,47 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\homeSite\CNAME" />
+    <None Include="wwwroot\css\fontawesome.css" />
+    <None Include="wwwroot\homeSite\index.html" />
+    <None Include="wwwroot\homeSite\index.js" />
+    <None Include="wwwroot\homeSite\LICENSE" />
+    <None Include="wwwroot\homeSite\media\android-chrome-192x192.png" />
+    <None Include="wwwroot\homeSite\media\android-chrome-512x512.png" />
+    <None Include="wwwroot\homeSite\media\apple-touch-icon.png" />
+    <None Include="wwwroot\homeSite\media\ChromeExtImg.webp" />
+    <None Include="wwwroot\homeSite\media\favicon-16x16.png" />
+    <None Include="wwwroot\homeSite\media\favicon-32x32.png" />
+    <None Include="wwwroot\homeSite\media\favicon.ico" />
+    <None Include="wwwroot\homeSite\media\PlannerImg.webp" />
+    <None Include="wwwroot\homeSite\media\selfie.webp" />
+    <None Include="wwwroot\homeSite\media\TimerImg.webp" />
+    <None Include="wwwroot\homeSite\media\wpooley_resume.pdf" />
+    <None Include="wwwroot\homeSite\README.md" />
+    <None Include="wwwroot\webfonts\fa-brands-400.eot" />
+    <None Include="wwwroot\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\webfonts\fa-brands-400.ttf" />
+    <None Include="wwwroot\webfonts\fa-brands-400.woff" />
+    <None Include="wwwroot\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\webfonts\fa-regular-400.eot" />
+    <None Include="wwwroot\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\webfonts\fa-regular-400.ttf" />
+    <None Include="wwwroot\webfonts\fa-regular-400.woff" />
+    <None Include="wwwroot\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\webfonts\fa-solid-900.eot" />
+    <None Include="wwwroot\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\webfonts\fa-solid-900.ttf" />
+    <None Include="wwwroot\webfonts\fa-solid-900.woff" />
+    <None Include="wwwroot\webfonts\fa-solid-900.woff2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.9" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\homeSite\css\" />
   </ItemGroup>
 
 </Project>
