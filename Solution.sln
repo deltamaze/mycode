@@ -14,20 +14,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockWatch", "StockWatch\St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsolePlayGroundTest", "ConsolePlayGroundTest\ConsolePlayGroundTest.csproj", "{949B9D72-1CE7-43F7-917C-D0CF4F9866BF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PersonalSite", "PersonalSite", "{BA5FDDC4-488B-4898-B883-5C7D4336627D}"
-	ProjectSection(SolutionItems) = preProject
-		PersonalSite\.DS_Store = PersonalSite\.DS_Store
-		PersonalSite\CNAME = PersonalSite\CNAME
-		PersonalSite\index.css = PersonalSite\index.css
-		PersonalSite\index.html = PersonalSite\index.html
-		PersonalSite\index.js = PersonalSite\index.js
-		PersonalSite\LICENSE = PersonalSite\LICENSE
-		PersonalSite\PersonalSite.njsproj = PersonalSite\PersonalSite.njsproj
-		PersonalSite\PersonalSite.njsproj.user = PersonalSite\PersonalSite.njsproj.user
-		PersonalSite\README.md = PersonalSite\README.md
-		Script1.js = Script1.js
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlogSite", "BlogSite", "{3F080335-723D-48B6-A78A-6C413585BDBF}"
 EndProject
 Global
