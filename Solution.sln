@@ -16,6 +16,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsolePlayGroundTest", "Co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlogSite", "BlogSite", "{3F080335-723D-48B6-A78A-6C413585BDBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaDownloader", "MangaDownloader\MangaDownloader.csproj", "{C2138901-FD1E-444C-818E-2C69704C9F62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{949B9D72-1CE7-43F7-917C-D0CF4F9866BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{949B9D72-1CE7-43F7-917C-D0CF4F9866BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{949B9D72-1CE7-43F7-917C-D0CF4F9866BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2138901-FD1E-444C-818E-2C69704C9F62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2138901-FD1E-444C-818E-2C69704C9F62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2138901-FD1E-444C-818E-2C69704C9F62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2138901-FD1E-444C-818E-2C69704C9F62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
